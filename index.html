@@ -8,33 +8,38 @@
       margin: 0;
       padding: 0;
       height: 100vh;
-      background: #fff0f6;
+      background: linear-gradient(45deg, #ff5a5f, #f06d06, #fdc830);
+      background-size: 300% 300%;
+      animation: gradient 6s ease infinite;
       overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
       font-family: 'Arial', sans-serif;
       position: relative;
+      color: white;
+      text-align: center;
     }
 
     #typing {
-      font-size: 2em;
-      color: #d6336c;
+      font-size: 3em;
+      color: white;
       white-space: nowrap;
       overflow: hidden;
-      border-right: 0.15em solid #d6336c;
-      animation: typing 3s steps(15), blink 0.75s step-end infinite;
+      border-right: 0.15em solid white;
+      animation: typing 3s steps(20), blink 0.75s step-end infinite;
+      animation-delay: 1s;
+      font-weight: bold;
     }
 
     @keyframes typing {
       from { width: 0 }
-      to { width: 15ch }
+      to { width: 20ch }
     }
 
     @keyframes blink {
       from, to { border-color: transparent }
-      50% { border-color: #d6336c }
+      50% { border-color: white }
     }
 
     .heart {
@@ -43,7 +48,7 @@
       height: 20px;
       background-color: pink;
       transform: rotate(45deg);
-      animation: floatUp 5s infinite;
+      animation: floatUp 6s infinite, colorChange 2s infinite;
       opacity: 0.7;
     }
 
@@ -77,6 +82,39 @@
         opacity: 0;
       }
     }
+
+    @keyframes colorChange {
+      0% { background-color: pink; }
+      25% { background-color: #ff6a9d; }
+      50% { background-color: #ff5a5f; }
+      75% { background-color: #fdc830; }
+      100% { background-color: pink; }
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: white;
+      border-radius: 50%;
+      animation: sparkle 3s infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes sparkle {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(0);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -92,10 +130,23 @@
       document.body.appendChild(heart);
       setTimeout(() => {
         heart.remove();
-      }, 5000);
+      }, 6000); // 6秒後にハートを消す
+    }
+
+    // キラキラエフェクトを追加
+    function createSparkle() {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle';
+      sparkle.style.left = Math.random() * 100 + 'vw';
+      sparkle.style.bottom = Math.random() * 100 + 'vh';
+      document.body.appendChild(sparkle);
+      setTimeout(() => {
+        sparkle.remove();
+      }, 2000); // 2秒後に消す
     }
 
     setInterval(createHeart, 500); // 0.5秒ごとにハート作成
+    setInterval(createSparkle, 300); // 0.3秒ごとにキラキラ作成
   </script>
 </body>
 </html>
